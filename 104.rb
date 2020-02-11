@@ -27,5 +27,9 @@ end
 # binding.pry
 p res
 
-# try to get page count from page-select dom element.
+# How to get full data/next page
+# 1. try to get page count from page-select dom element, then fire rest of http requests.
 # page_select = doc.css("select[class~='page-select']")
+
+# 1.2. get page numbers from script tags
+Nokogiri::HTML(res.body).xpath('//script').each { |node| p /\"totalPage\":[0-9]+/.match(node.children.first).to_s.split(':').last.to_i if node.children.any? && /totalCount/ =~ node.children.first }
