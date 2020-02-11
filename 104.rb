@@ -1,6 +1,6 @@
 require 'net/http'
 require 'nokogiri'
-require 'pry'
+# require 'pry'
 
 uri = URI('https://www.104.com.tw/jobs/search/?keyword=rails')
 request = Net::HTTP::Get.new(uri)
@@ -11,7 +11,7 @@ end
 # arr = []
 # Nokogiri.HTML(response.body).xpath('//a').each { |node| arr << node if /company/ =~ node.attributes['href'] }
 # p arr
-# arr.count
+# p arr.count
 
 company_list = Nokogiri.HTML(response.body).xpath('//a').select{ |node| /company/ =~ node.attributes['href'] }
 
@@ -23,6 +23,9 @@ res = company_list.each_with_index.reduce({}) do |hash, company|
     company[0].attributes["href"].value
   ]})
 end
+
 # binding.pry
-p resd
+p res
+
+# try to get page count from page-select dom element.
 # page_select = doc.css("select[class~='page-select']")
