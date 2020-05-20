@@ -16,3 +16,11 @@ class Crawler
     result = ip_list.search('body').to_s.split('<br>')
   end
 end
+
+a = Crawler.new
+head = ' Response: '
+puts '=' * 20 + head + '=' * 20
+a.response
+puts a.result.class
+puts a.result
+puts '=' * (40 + head.size)
