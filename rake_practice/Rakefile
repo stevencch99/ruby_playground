@@ -1,0 +1,40 @@
+desc "Export report with result under directory 'export/report'"
+
+task export: "export/report" do
+  p 'exporting...'
+  touch 'export/report/result_file.csv'
+end
+
+desc "Create directory 'report' and 'export/report'"
+directory 'export/report'
+
+desc 'Give coupon if user replies bwtween activity period'
+# usage: $ rake "give_coupon['2020', '2021']"
+task :give_coupon, [:activity_started_at, :activity_finished_at] do |task, args|
+  puts "Give coupon if user replies between #{args.activity_started_at} and #{args.activity_finished_at}."
+end
+
+desc 'Print out forename, then first name and last name.'
+task :name, [:first_name, :last_name] => [:fore_name] do |task, args|
+  puts "First name is #{args.first_name}."
+  puts "Last name is #{args.last_name}."
+end
+
+task :fore_name, [:fore_name] do |task, args|
+  args.with_defaults(fore_name: 'Timana')
+  puts "Forename is #{args.fore_name}."
+end
+
+namespace 'main' do
+  task :build do
+    p 'Build the main program rakefile'
+  end
+end
+
+namespace 'samples' do
+  task :build do
+    p 'Build the sample programs rakefile'
+  end
+end
+
+task build: %w[main:build samples:build]
