@@ -1,6 +1,6 @@
 require 'net/http'
 require 'nokogiri'
-# require 'pry'
+require 'pry'
 
 class Crawler
   attr_reader :response, :result
@@ -12,6 +12,7 @@ class Crawler
       http.request(request)
     end
 
+binding.pry
     ip_list = Nokogiri.HTML(@response.body)
     result = ip_list.search('body').to_s.split('<br>')
   end
