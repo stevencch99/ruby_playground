@@ -7,7 +7,7 @@ class Crawler
 
   def initialize
     # Add pages number at the end of search_query to get specific page's results
-    search_query = "https://www.104.com.tw/jobs/search/?keyword=rails&page="
+    search_query = 'https://www.104.com.tw/jobs/search/?keyword=rails&page='
 
     uri = URI('https://www.104.com.tw/jobs/search/?keyword=rails')
     request = Net::HTTP::Get.new(uri)
@@ -15,15 +15,16 @@ class Crawler
       http.request(request)
     end
 
-    company_list = Nokogiri.HTML(@response.body).xpath('//a').select{ |node| /company/ =~ node.attributes['href'] }
+    company_list = Nokogiri.HTML(@response.body).xpath('//a').select { |node| /company/ =~ node.attributes['href'] }
 
     @result = company_list.each_with_index.reduce({}) do |hash, company|
       hash.merge!({
-        company[1] => [
-        company[0].attributes["title"].value.split[0][4..-1],
-        company[0].attributes["title"].value.split[1][5..-1],
-        company[0].attributes["href"].value
-      ]})
+                    company[1] => [
+                      company[0].attributes['title'].value.split[0][4..-1],
+                      company[0].attributes['title'].value.split[1][5..-1],
+                      company[0].attributes['href'].value
+                    ]
+                  })
     end
   end
 

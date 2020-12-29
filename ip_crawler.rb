@@ -1,7 +1,7 @@
 require 'net/http'
 require 'nokogiri'
-# require 'pry'
 
+# run this code to get server IP of Mario project
 class Crawler
   attr_reader :response, :result
 
@@ -13,14 +13,14 @@ class Crawler
     end
 
     ip_list = Nokogiri.HTML(@response.body)
-    result = ip_list.search('body').to_s.split('<br>')
+    @result = ip_list.search('body').to_s.split('<br>')
   end
 end
 
 a = Crawler.new
 head = ' Response: '
 puts '=' * 20 + head + '=' * 20
-a.response
+p a.response
 puts a.result.class
 puts a.result
 puts '=' * (40 + head.size)
